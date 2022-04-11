@@ -35,6 +35,6 @@ void main()
   }
 }
 int yywrap()
-{  printf(" 1976336 MinJi Chang End of Lex\n");
+{  printf(" End of Lex\n");
    return 1;
 }

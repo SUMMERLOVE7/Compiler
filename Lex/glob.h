@@ -1,8 +1,3 @@
-/*
-glob.h - global variable for the project
-programmer - 장민지
-date - 2022.04.24
-*/
 //#include <stdio.h>
 //#include <stdlib.h>
 //#include <string.h>

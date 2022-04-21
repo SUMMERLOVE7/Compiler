@@ -1,8 +1,3 @@
-/*
- 2022.04.24
- 1976336 Àå¹ÎÁö
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,17 +12,17 @@ extern int yylex();
 extern char* yytext;
 
 char input;
-int cLine = 1; //ÁÙ ³Ñ¹ö
+int cLine = 1; //ì¤„ ë„˜ë²„
 enum tokentypes tn;
 
 void PrintError(ERRORtypes err) {
 
     switch (err) {
-    case overst: //¿À¹öÇÃ·Î¿ì°¡ ¹ß»ıÇÑ °æ¿ì, ¿À·ù¹®±¸¸¦ Ãâ·ÂÇÏ°í Áö±İ±îÁöÀÇ ÇØ½ÃÅ×ÀÌºíÀ» Ãâ·ÂÇÏ°í ¿ÏÀüÈ÷ Á¾·á
+    case overst: //ì˜¤ë²„í”Œë¡œìš°ê°€ ë°œìƒí•œ ê²½ìš°, ì˜¤ë¥˜ë¬¸êµ¬ë¥¼ ì¶œë ¥í•˜ê³  ì§€ê¸ˆê¹Œì§€ì˜ í•´ì‹œí…Œì´ë¸”ì„ ì¶œë ¥í•˜ê³  ì™„ì „íˆ ì¢…ë£Œ
         printf("        ...Error... OVERFLOW \n");
         exit(0);
         break;
-    case illsp: // Çã¿ëµÇÁö ¾ÊÀº ±¸ºĞÀÚ¸¦ »ç¿ëÇÑ °æ¿ì
+    case illsp: // í—ˆìš©ë˜ì§€ ì•Šì€ êµ¬ë¶„ìë¥¼ ì‚¬ìš©í•œ ê²½ìš°
         printf("     %d      ", cLine);
 
         printf("        ...Error...   %c is illegal seperator \n", input);
@@ -65,33 +60,33 @@ If find a match, set the found flag as true. Other wise false.
 If find a match, save the starting index of ST in same id
 */
 void LookupHS(int nid, int hscode) {
-    HTpointer here; //HTentry¸¦ °¡¸®Å°´Â Æ÷ÀÎÅÍ
+    HTpointer here; //HTentryë¥¼ ê°€ë¦¬í‚¤ëŠ” í¬ì¸í„°
     int i, j;
-    found = FALSE; //ÀÌ¹Ì HT¿¡ µé¾î°£ ¹®ÀÚ¿­ÀÎ °æ¿ì TRUE ±×·¸Áö ¾Æ´Ï¸é FALSE
+    found = FALSE; //ì´ë¯¸ HTì— ë“¤ì–´ê°„ ë¬¸ìì—´ì¸ ê²½ìš° TRUE ê·¸ë ‡ì§€ ì•„ë‹ˆë©´ FALSE
 
-    //»õ·Î¿î word°¡ hashtable¿¡ ÀúÀåµÇ°íÀÚ ÇÏ´Â index(À§Ä¡)°¡ ºñ¾îÀÖÁö ¾ÊÀ¸¸é,
+    //ìƒˆë¡œìš´ wordê°€ hashtableì— ì €ì¥ë˜ê³ ì í•˜ëŠ” index(ìœ„ì¹˜)ê°€ ë¹„ì–´ìˆì§€ ì•Šìœ¼ë©´,
     if (HT[hscode] != NULL) {
-        here = HT[hscode]; // HT[hscode] ÀÎµ¦½ºÀ§Ä¡¿¡ Á¸ÀçÇÏ´Â HTpointer·Î ¸¸µë
+        here = HT[hscode]; // HT[hscode] ì¸ë±ìŠ¤ìœ„ì¹˜ì— ì¡´ì¬í•˜ëŠ” HTpointerë¡œ ë§Œë“¬
 
-        //ÀÏ´Ü HT³»¿¡¼­ °°Àº ÀÎµ¦½º¸¦ °¡Áø´Ù´Â°Ç °°Àº hscode ¸¦ °¡Áö±â ¶§¹®¿¡ ÀÌ¹Ì µé¾î°£ ´Ü¾î°¡ Á¸ÀçÇÒ ¼öµµ
+        //ì¼ë‹¨ HTë‚´ì—ì„œ ê°™ì€ ì¸ë±ìŠ¤ë¥¼ ê°€ì§„ë‹¤ëŠ”ê±´ ê°™ì€ hscode ë¥¼ ê°€ì§€ê¸° ë•Œë¬¸ì— ì´ë¯¸ ë“¤ì–´ê°„ ë‹¨ì–´ê°€ ì¡´ì¬í•  ìˆ˜ë„
         while (here != NULL && found == FALSE) {
-            found = TRUE; //ÀÌ¹Ì Á¸ÀçÇÏ´Â ´Ü¾î¶ó°í °¡Á¤ÇØ¹ö¸²
-            i = here->index; //HT[hscode] ¿¡¼­ index ºÎºĞ¿¡ ÀûÈù Á¤¼ö ( ÇØ´ç HT index»ó¿¡ Á¸ÀçÇÏ´Â wordÀÇ Ã¹ ±ÛÀÚ)
-            j = nid;//wordÀÇ ½ÃÀÛºÎºĞÀÇ index(Áö±İµé¾î°¥ ´Ü¾îÀÇ Ã¹ ÀÎµ¦½º )
+            found = TRUE; //ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ë‹¨ì–´ë¼ê³  ê°€ì •í•´ë²„ë¦¼
+            i = here->index; //HT[hscode] ì—ì„œ index ë¶€ë¶„ì— ì íŒ ì •ìˆ˜ ( í•´ë‹¹ HT indexìƒì— ì¡´ì¬í•˜ëŠ” wordì˜ ì²« ê¸€ì)
+            j = nid;//wordì˜ ì‹œì‘ë¶€ë¶„ì˜ index(ì§€ê¸ˆë“¤ì–´ê°ˆ ë‹¨ì–´ì˜ ì²« ì¸ë±ìŠ¤ )
             sameid = i;
 
-            //HTÀÇ ÇØ´ç hscode¿¡ index»ó¿¡ ÀúÀåµÈ ´Ü¾î°¡ ÀÌ¹ÌÀÖ´Â ´Ü¾îÀÎÁö °Ë»çÇØº¸·Á°í µ¹¸²
-            while (ST[i] != '\0' && ST[j] != '\0' && found == TRUE) {//ÀÌ¹ø¿¡ µé¾î¿Â ´Ü¾î°¡ ÀÌ¹Ì ÀÖ´Â ´Ü¾î¶ó°í °¡Á¤ÇÏ°í ÇÑ±ÛÀÚ¾¿ °°ÀºÁö ºñ
+            //HTì˜ í•´ë‹¹ hscodeì— indexìƒì— ì €ì¥ëœ ë‹¨ì–´ê°€ ì´ë¯¸ìˆëŠ” ë‹¨ì–´ì¸ì§€ ê²€ì‚¬í•´ë³´ë ¤ê³  ëŒë¦¼
+            while (ST[i] != '\0' && ST[j] != '\0' && found == TRUE) {//ì´ë²ˆì— ë“¤ì–´ì˜¨ ë‹¨ì–´ê°€ ì´ë¯¸ ìˆëŠ” ë‹¨ì–´ë¼ê³  ê°€ì •í•˜ê³  í•œê¸€ìì”© ê°™ì€ì§€ ë¹„
 
                 if (ST[i] == ST[j]) {
                     i++;
                     j++;
                 }
                 else {
-                    found = FALSE; //ÇÑÀÚÇÑÀÚ °Ë»çÇÏ¸é¼­ ´Ù¸¥´Ü¾î°¡ ³ª¿À¸é FALSE·Î ¸¸µé±â -> false°¡ µÇ¸é whileÀÌ ³¡³²           
+                    found = FALSE; //í•œìí•œì ê²€ì‚¬í•˜ë©´ì„œ ë‹¤ë¥¸ë‹¨ì–´ê°€ ë‚˜ì˜¤ë©´ FALSEë¡œ ë§Œë“¤ê¸° -> falseê°€ ë˜ë©´ whileì´ ëë‚¨           
                 }
             }
-            here = here->next; //¿¬°á¸®½ºÆ®¸¦ ÀÌ¿ëÇØ ´ÙÀ½ ¿¬°á¸®½ºÆ®¿¡ ÀúÀåµÈ word¿Í °ãÄ¡´ÂÁö °Ë»çÇÏ±âÀ§ÇØ ´ÙÀ½À¸·Î ³Ñ±è
+            here = here->next; //ì—°ê²°ë¦¬ìŠ¤íŠ¸ë¥¼ ì´ìš©í•´ ë‹¤ìŒ ì—°ê²°ë¦¬ìŠ¤íŠ¸ì— ì €ì¥ëœ wordì™€ ê²¹ì¹˜ëŠ”ì§€ ê²€ì‚¬í•˜ê¸°ìœ„í•´ ë‹¤ìŒìœ¼ë¡œ ë„˜ê¹€
         }
     }
 }
@@ -169,7 +164,7 @@ int SymbolTable()
     if (tn == TERROR) {
         err = illid; PrintError(err);
     }
-    ComputeHS(nextid, nextfree); //ÀÔ·Â wordÀÇ hashcode : hashtable»ó¿¡ ÀúÀåµÉ index °è»ê
+    ComputeHS(nextid, nextfree); //ì…ë ¥ wordì˜ hashcode : hashtableìƒì— ì €ì¥ë  index ê³„ì‚°
     LookupHS(nextid, hashcode);
 
     return 0;
